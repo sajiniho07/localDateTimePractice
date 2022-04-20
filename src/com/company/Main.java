@@ -8,15 +8,11 @@ import java.util.Date;
 public class Main {
 
     public static void main(String[] args) {
-        UseDateTimeFormatter useDateTimeFormatter = new UseDateTimeFormatter();
-        LocalDateTime localDateTime = LocalDateTime.now();  // Bad practice
-        String temp = useDateTimeFormatter.formatAsIsoDate(localDateTime);
-        System.out.println("LocalDateTime.now: " + temp);
 
         ZoneId zoneId = ZoneId.systemDefault();
         System.out.println("ZoneId: " + zoneId);
 
-        LocalDateTime now = LocalDateTime.now(zoneId);  // Best practice
+        LocalDateTime now = LocalDateTime.now(zoneId);  // Best practice to get current time.
         System.out.println("LocalDateTime.now by zoneId: " + now);
 
         LocalDateTime tomorrow = now.plusDays(1);
@@ -32,7 +28,7 @@ public class Main {
         System.out.println("DayOfMonth: " + twelve);
 
         ZoneId zoneIdParis = ZoneId.of("Europe/Paris");
-        ZonedDateTime zonedDateTime = ZonedDateTime.of(localDateTime, zoneIdParis);
+        ZonedDateTime zonedDateTime = ZonedDateTime.of(now, zoneIdParis);
         System.out.println("zonedDateTime: " + zonedDateTime);
 
         LocalDate initialDate = LocalDate.parse("2007-05-10");
@@ -50,7 +46,12 @@ public class Main {
         LocalDateTime localDateTimeCompatibleByDate = LocalDateTime.ofInstant(date.toInstant(), zoneId);
         System.out.println("localDateTimeCompatibleByDate: " + localDateTimeCompatibleByDate);
 
-        String format = localDateTime.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+        String format = now.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
         System.out.println("DateTimeFormatter: " + format);
+
+        UseDateTimeFormatter useDateTimeFormatter = new UseDateTimeFormatter();
+        LocalDateTime localDateTime = LocalDateTime.now();  // Bad practice to get current time.
+        String temp = useDateTimeFormatter.formatAsIsoDate(localDateTime);
+        System.out.println("LocalDateTime.now: " + temp);
     }
 }
